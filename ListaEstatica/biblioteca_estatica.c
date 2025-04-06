@@ -34,8 +34,7 @@ int emprestarLivro(Biblioteca *b, char *isbn, char *usuario, char *data)
 {
     for (int i = 0; i < b->totalLivros; i++)
     {
-        if (strcmp(b->livros[i].isbn, isbn) == 0 && b->livros[i].status ==
-                                                        DISPONIVEL)
+        if (strcmp(b->livros[i].isbn, isbn) == 0 && b->livros[i].status == DISPONIVEL)
         {
             b->livros[i].status = EMPRESTADO;
             strcpy(b->livros[i].usuario, usuario);
@@ -49,8 +48,7 @@ int devolverLivro(Biblioteca *b, char *isbn)
 {
     for (int i = 0; i < b->totalLivros; i++)
     {
-        if (strcmp(b->livros[i].isbn, isbn) == 0 && b->livros[i].status ==
-                                                        EMPRESTADO)
+        if (strcmp(b->livros[i].isbn, isbn) == 0 && b->livros[i].status == EMPRESTADO)
         {
             b->livros[i].status = DISPONIVEL;
             b->livros[i].usuario[0] = '\0';

@@ -1,18 +1,52 @@
 #include <stdio.h>
+#include <string.h>
 #include "biblioteca_estatica.h"
-int main()
-{
+
+void gerarISBN(int index, char* isbn) {
+    sprintf(isbn, "%013d", 1000000000000 + index);
+}
+
+void cadastrarNLivros(Biblioteca* b, int quantidade) {
+    char titulo[100], autor[100], isbn[14];
+    for (int i = 0; i < quantidade; i++) {
+        sprintf(titulo, "Livro %d", i + 1);
+        sprintf(autor, "Autor %d", i + 1);
+        gerarISBN(i, isbn);
+        if (!cadastrarLivro(b, titulo, autor, 2000 + (i % 24), isbn)) {
+            printf("Erro ao cadastrar o livro %d\n", i + 1);
+        }
+    }
+}
+
+void emprestarEDevolverAlguns(Biblioteca* b) {
+    for (int i = 0; i < b->totalLivros; i += 10) {
+        emprestarLivro(b, b->livros[i].isbn, "Aluno", "06/04/2025");
+    }
+
+    for (int i = 0; i < b->totalLivros; i += 20) {
+        devolverLivro(b, b->livros[i].isbn);
+    }
+}
+
+int main() {
     Biblioteca b;
     inicializarBiblioteca(&b);
-    cadastrarLivro(&b, "O Senhor dos Anéis", "J.R.R. Tolkien", 1954, "1234567890123");
-    cadastrarLivro(&b, "1984", "George Orwell", 1949, "9876543210987");
-    cadastrarLivro(&b, "A Revolução dos Bichos", "George Orwell", 1945, "1234567890124");
-    cadastrarLivro(&b, "Dom Casmurro", "Machado de Assis", 1899, "1234567890125");
+
+    printf("==== Teste com 5 livros ====\n");
+    cadastrarNLivros(&b, 5);
     listarTodosLivros(&b);
-    consultarLivroPorISBN(&b, "1234567890123");
-    emprestarLivro(&b, "1234567890123", "João", "2023-10-01");
-    consultarLivroPorISBN(&b, "1234567890123");
-    devolverLivro(&b, "1234567890123");
-    consultarLivroPorISBN(&b, "1234567890123");
+
+    printf("\n==== Teste com 50 livros ====\n");
+    inicializarBiblioteca(&b);
+    cadastrarNLivros(&b, 50);
+    emprestarEDevolverAlguns(&b);
+    listarTodosLivros(&b);
+
+    printf("\n==== Teste com 500 livros ====\n");
+    inicializarBiblioteca(&b);
+    cadastrarNLivros(&b, 500);
+    emprestarEDevolverAlguns(&b);
+    printf("Total de livros cadastrados: %d\n", b.totalLivros);
+
     return 0;
 }
