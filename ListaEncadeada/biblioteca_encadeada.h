@@ -29,8 +29,8 @@ typedef struct
 {
     NoLivro *primeiro;
     int totalLivros;
+    
 } Biblioteca;
-// Prototipos
 void inicializarBiblioteca(Biblioteca *b);
 int cadastrarLivro(Biblioteca *b, char *titulo, char *autor, int ano, char *isbn);
 void listarTodosLivros(Biblioteca *b);

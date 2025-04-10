@@ -4,7 +4,7 @@
 #include "biblioteca_dinamica.h"
 
 void gerarISBN(int index, char* isbn) {
-    sprintf(isbn, "%013d", 1000000000000 + index); // Gera um ISBN único
+    sprintf(isbn, "%013d", 1000000000000 + index); 
 }
 
 void cadastrarNLivros(Biblioteca* b, int quantidade) {

@@ -4,18 +4,24 @@
 #include <string.h>
 
 #define INICIAL 10
+//define o tam inicial da biblioteca em 10
 
 void inicializarBiblioteca(Biblioteca *b)
 {
     b->livros = (Livro *)malloc(INICIAL * sizeof(Livro));
+    //inicializa a biblioteca dizendo quantos livros podem ser armazenados no momento 
     b->capacidade = INICIAL;
     b->totalLivros = 0;
+    //inicia com 0 livros cadastrrados
 }
 
-// Esta função realoca o vetor de livros com nova capacidade
+// realoca o vetor de livros com nova capacidade
 void redimensionarBiblioteca(Biblioteca* b, int novaCapacidade) {
+    //realocar a capacidade da biblioteca usando temp q é um ponteiro temporario, pq se vc usar direto b->livros e 
+    //der errado a realocação (por motivos de falta de memoria por ex), vc perde o ponteiro
     Livro* temp = realloc(b->livros, novaCapacidade * sizeof(Livro));
     if (temp != NULL) {
+        //se a realocação der certo, use b->
         b->livros = temp;
         b->capacidade = novaCapacidade;
     } else {
@@ -109,7 +115,9 @@ Livro* consultarLivroPorISBN(Biblioteca* b, char* isbn) {
 // Liberar memória
 void destruirBiblioteca(Biblioteca *b)
 {
+    //libera o espaço da memoria excluindo conteudo
     free(b->livros);
+    //zera os conteudos
     b->livros = NULL;
     b->capacidade = 0;
     b->totalLivros = 0;
